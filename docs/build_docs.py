@@ -13,8 +13,9 @@ from pypdf import PdfReader
 
 # ----------------------------------------------------------------- CONFIG (capa)
 AUTORES = ["Antonio Pignataro"]          # dupla? adicione o outro nome na lista
-INSTITUICAO = ""                          # ex.: "UniFil - Centro Universitário Filadélfia"
-CURSO = ""                                # ex.: "Ciência da Computação"
+INSTITUICAO = "UniFil - Centro Universitário Filadélfia"
+CURSO = "Engenharia de Software"
+RA = "253466044"                          # com dupla, use ex.: "Nome A (RA 1) e Nome B (RA 2)" em AUTORES e deixe RA vazio
 DISCIPLINA = "Projeto de Desenvolvimento de Software I e II"
 REPOSITORIO = ""                          # ex.: "https://github.com/usuario/GerenciadorTarefas"
 DATA = "Novembro de 2026"
@@ -489,6 +490,8 @@ def capa():
     linhas = [html.escape(INSTITUICAO), html.escape(CURSO), html.escape(DISCIPLINA)]
     topo = "<br>".join(l for l in linhas if l)
     autores = "<br>".join(html.escape(a) for a in AUTORES)
+    if RA:
+        autores += f"<br>RA: {html.escape(RA)}"
     return f"""
 <div class="capa">
   <div class="topo">{topo}</div>

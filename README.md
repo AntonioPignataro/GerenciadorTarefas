@@ -1,7 +1,8 @@
 # Gerenciador de Tarefas
 
 Projeto de Desenvolvimento de Software I e II.
-**Autor:** Antonio Pignataro (trabalho individual)
+**Autor:** Antonio Pignataro (RA 253466044), trabalho individual
+**Instituição:** UniFil - Centro Universitário Filadélfia | **Curso:** Engenharia de Software
 
 Aplicação web simples para organizar tarefas e categorias, com CRUD completo e banco de dados relacional.
 
