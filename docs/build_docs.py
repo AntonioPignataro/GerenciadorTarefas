@@ -18,7 +18,9 @@ CURSO = "Engenharia de Software"
 RA = "253466044"                          # com dupla, use ex.: "Nome A (RA 1) e Nome B (RA 2)" em AUTORES e deixe RA vazio
 DISCIPLINA = "Projeto de Desenvolvimento de Software I e II"
 REPOSITORIO = ""                          # ex.: "https://github.com/usuario/GerenciadorTarefas"
-DATA = "Novembro de 2026"
+CIDADE = "Londrina"
+ANO = "2026"
+SUBTITULO = "Documentação e implementação de um sistema web de gestão de tarefas"
 # -------------------------------------------------------------------------------
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
@@ -221,8 +223,9 @@ sequenceDiagram
 
 def fig(chave, legenda):
     return (
-        f'<figure><pre class="mermaid">{html.escape(DIAGRAMAS[chave].strip())}</pre>'
-        f"<figcaption>{legenda}</figcaption></figure>"
+        f'<figure><figcaption>{legenda}</figcaption>'
+        f'<pre class="mermaid">{html.escape(DIAGRAMAS[chave].strip())}</pre>'
+        f'<p class="fonte">Fonte: Elaborado pelo autor ({ANO}).</p></figure>'
     )
 
 
@@ -257,40 +260,7 @@ def use_case_svg():
     return "".join(partes)
 
 
-CSS = """
-@page { size: A4; margin: 22mm 20mm 22mm 20mm;
-        @bottom-center { content: counter(page); font-size: 10pt; color: #555; } }
-@page :first { @bottom-center { content: none; } }
-body { font-family: Georgia, 'Times New Roman', serif; font-size: 12pt; line-height: 1.5; color: #111; }
-h1, h2, h3 { font-family: Helvetica, Arial, sans-serif; color: #1f3a63; }
-h2, h3 { break-after: avoid; page-break-after: avoid; }
-h2 { font-size: 17pt; margin-top: 0; border-bottom: 2px solid #1f3a63; padding-bottom: 4px; }
-h3 { font-size: 13pt; margin-bottom: 4px; }
-p { text-align: justify; margin: 6px 0; }
-.capa { height: 250mm; display: flex; flex-direction: column; justify-content: space-between; text-align: center; page-break-after: always; }
-.capa .topo { font-family: Helvetica, Arial, sans-serif; font-size: 13pt; line-height: 1.7; }
-.capa .titulo { font-family: Helvetica, Arial, sans-serif; }
-.capa .titulo h1 { font-size: 34pt; margin: 0 0 12px; }
-.capa .titulo p { text-align: center; font-size: 14pt; color: #444; }
-.capa .rodape { font-family: Helvetica, Arial, sans-serif; font-size: 12pt; }
-section { page-break-before: always; }
-section.sem-quebra { page-break-before: avoid; }
-.toc a { color: #111; text-decoration: none; }
-.toc li { display: flex; margin: 4px 0; list-style: none; }
-.toc li .t { white-space: nowrap; }
-.toc li .p { flex: 1; border-bottom: 1px dotted #888; margin: 0 6px 5px; }
-.toc li.n3 { padding-left: 24px; font-size: 11pt; }
-ul, ol { margin: 6px 0 6px 18px; }
-table { border-collapse: collapse; width: 100%; font-size: 11pt; margin: 8px 0; break-inside: avoid; }
-th, td { border: 1px solid #999; padding: 4px 8px; text-align: left; vertical-align: top; }
-th { background: #e8eef7; font-family: Helvetica, Arial, sans-serif; }
-figure { margin: 10px 0; text-align: center; break-inside: avoid; }
-figure svg { max-width: 100%; max-height: 190mm; }
-figcaption { font-size: 10pt; color: #444; font-style: italic; margin-top: 4px; }
-pre.mermaid { background: none; margin: 0; }
-pre.mermaid svg { max-height: 200mm; width: auto; }
-code { font-family: Menlo, Consolas, monospace; font-size: 10.5pt; }
-"""
+CSS = open(os.path.join(AQUI, "estilo_abnt.css"), encoding="utf-8").read()
 
 
 def requisitos():
@@ -343,8 +313,8 @@ estão pendentes ou concluídas e pode editar ou excluir qualquer registro. O si
 <h3>1.1 Tecnologias utilizadas (stack)</h3>
 <ul>
 <li><b>Linguagem:</b> Python 3;</li>
-<li><b>Framework web:</b> Flask, responsável pelas rotas e pela renderização das páginas com o motor de templates Jinja2;</li>
-<li><b>Banco de dados:</b> SQLite (relacional), acessado pelo módulo <code>sqlite3</code> da biblioteca padrão do Python;</li>
+<li><b>Framework web:</b> Flask, responsável pelas rotas e pela renderização das páginas com o motor de templates Jinja2 (PALLETS PROJECTS, [s. d.]);</li>
+<li><b>Banco de dados:</b> SQLite (relacional) (SQLITE, [s. d.]), acessado pelo módulo <code>sqlite3</code> da biblioteca padrão do Python (PYTHON SOFTWARE FOUNDATION, [s. d.]);</li>
 <li><b>Front-end:</b> HTML5 e CSS3 simples, sem bibliotecas externas;</li>
 <li><b>Testes:</b> módulo <code>unittest</code> com o cliente de testes do Flask;</li>
 <li><b>Controle de versão:</b> Git e GitHub{(" (" + html.escape(REPOSITORIO) + ")") if REPOSITORIO else ""}.</li>
@@ -372,14 +342,15 @@ trabalho é a modelagem e o CRUD. A aplicação é composta pelas seguintes tela
 
 <section id="s3">
 <h2>3. Levantamento de Requisitos</h2>
+<p>Os requisitos foram divididos em funcionais, que descrevem o que o sistema deve fazer, e não funcionais, que descrevem restrições e qualidades do sistema, conforme a distinção apresentada por Sommerville (2018).</p>
 {requisitos()}
 </section>
 
 <section id="s4">
 <h2>4. Modelagem</h2>
 <h3>4.1 Diagrama de Casos de Uso</h3>
-<p>O diagrama abaixo apresenta os cinco casos de uso do sistema e o ator <b>Usuário</b>, que interage com todos eles.</p>
-<figure>{use_case_svg()}<figcaption>Figura 1 - Diagrama de casos de uso.</figcaption></figure>
+<p>A modelagem utilizou diagramas da UML (FOWLER, 2005), desenhados com a ferramenta Mermaid (MERMAID, [s. d.]). O diagrama abaixo apresenta os cinco casos de uso do sistema e o ator <b>Usuário</b>, que interage com todos eles.</p>
+<figure><figcaption>Figura 1 – Diagrama de casos de uso.</figcaption>{use_case_svg()}<p class="fonte">Fonte: Elaborado pelo autor ({ANO}).</p></figure>
 <table>
 <tr><th style="width:26%">Caso de uso</th><th>Descrição</th><th style="width:20%">Requisitos</th></tr>
 <tr><td>UC01 - Cadastrar tarefa</td><td>O usuário informa os dados da tarefa e o sistema a grava, validando que o título foi preenchido.</td><td>RF01, RF11</td></tr>
@@ -392,21 +363,21 @@ trabalho é a modelagem e o CRUD. A aplicação é composta pelas seguintes tela
 
 <section id="s5">
 <h3>4.2 Diagrama Entidade-Relacionamento (DER)</h3>
-<p>O modelo de dados possui duas entidades. Uma categoria pode classificar várias tarefas (relacionamento 1:N) e cada
+<p>O modelo de dados, elaborado segundo a abordagem entidade-relacionamento (ELMASRI; NAVATHE, 2018), possui duas entidades. Uma categoria pode classificar várias tarefas (relacionamento 1:N) e cada
 tarefa pertence a no máximo uma categoria, pois a chave estrangeira é opcional. Ao excluir uma categoria, a chave
 estrangeira das tarefas é definida como nula (<code>ON DELETE SET NULL</code>).</p>
-{fig("der", "Figura 2 - Diagrama Entidade-Relacionamento.")}
+{fig("der", "Figura 2 – Diagrama Entidade-Relacionamento.")}
 <h3>4.3 Diagrama de Classes</h3>
 <p>O diagrama de classes está focado nas entidades do domínio. A classe <b>Tarefa</b> referencia a classe
 <b>Categoria</b>; uma categoria pode ter zero ou mais tarefas.</p>
-{fig("classes", "Figura 3 - Diagrama de classes das entidades.")}
+{fig("classes", "Figura 3 – Diagrama de classes das entidades.")}
 </section>
 
 <section id="s6">
 <h3>4.4 Diagrama de Atividade</h3>
 <p>O diagrama de atividade descreve o fluxo do caso de uso UC01 (Cadastrar tarefa), incluindo o desvio que ocorre quando
 o título não é informado.</p>
-{fig("atividade", "Figura 4 - Diagrama de atividade do cadastro de tarefa.")}
+{fig("atividade", "Figura 4 – Diagrama de atividade do cadastro de tarefa.")}
 </section>
 
 <section id="s7">
@@ -414,19 +385,19 @@ o título não é informado.</p>
 <p>Cada caso de uso possui um diagrama de sequência que mostra a troca de mensagens entre o usuário, o navegador, a
 aplicação Flask e o banco de dados SQLite.</p>
 <h3>4.5.1 UC01 - Cadastrar tarefa</h3>
-{fig("seq1", "Figura 5 - Sequência do UC01.")}
+{fig("seq1", "Figura 5 – Sequência do UC01.")}
 </section>
 <section id="s8">
 <h3>4.5.2 UC02 - Consultar tarefas</h3>
-{fig("seq2", "Figura 6 - Sequência do UC02.")}
+{fig("seq2", "Figura 6 – Sequência do UC02.")}
 <h3>4.5.3 UC03 - Editar tarefa</h3>
-{fig("seq3", "Figura 7 - Sequência do UC03.")}
+{fig("seq3", "Figura 7 – Sequência do UC03.")}
 </section>
 <section id="s9">
 <h3>4.5.4 UC04 - Excluir tarefa</h3>
-{fig("seq4", "Figura 8 - Sequência do UC04.")}
+{fig("seq4", "Figura 8 – Sequência do UC04.")}
 <h3>4.5.5 UC05 - Gerenciar categorias</h3>
-{fig("seq5", "Figura 9 - Sequência do UC05.")}
+{fig("seq5", "Figura 9 – Sequência do UC05.")}
 </section>
 
 <section id="s10">
@@ -471,32 +442,44 @@ CRUD de forma rápida e repetível.</p>
 prazo e uma API para integração com aplicativos móveis.</p>
 </section>
 
-<section id="s12">
-<h2>7. Referências</h2>
-<ul style="list-style: none; margin-left: 0">
-<li>SOMMERVILLE, I. <b>Engenharia de Software</b>. 10. ed. São Paulo: Pearson, 2018.</li>
-<li>FOWLER, M. <b>UML Essencial: um breve guia para a linguagem-padrão de modelagem de objetos</b>. 3. ed. Porto Alegre: Bookman, 2005.</li>
-<li>ELMASRI, R.; NAVATHE, S. B. <b>Sistemas de Banco de Dados</b>. 7. ed. São Paulo: Pearson, 2018.</li>
-<li>PALLETS PROJECTS. <b>Flask Documentation</b>. Disponível em: https://flask.palletsprojects.com/. Acesso em: 21 nov. 2026.</li>
-<li>SQLITE. <b>SQLite Documentation</b>. Disponível em: https://www.sqlite.org/docs.html. Acesso em: 21 nov. 2026.</li>
-<li>PYTHON SOFTWARE FOUNDATION. <b>sqlite3 - DB-API 2.0 interface for SQLite databases</b>. Disponível em: https://docs.python.org/3/library/sqlite3.html. Acesso em: 21 nov. 2026.</li>
-<li>MERMAID. <b>Mermaid Documentation</b> (ferramenta usada para desenhar os diagramas). Disponível em: https://mermaid.js.org/. Acesso em: 21 nov. 2026.</li>
-</ul>
+<section id="s12" class="refs">
+<h2 style="text-align:center">REFERÊNCIAS</h2>
+<p>ELMASRI, R.; NAVATHE, S. B. <b>Sistemas de banco de dados</b>. 7. ed. São Paulo: Pearson, 2018.</p>
+<p>FOWLER, M. <b>UML essencial</b>: um breve guia para a linguagem-padrão de modelagem de objetos. 3. ed. Porto Alegre: Bookman, 2005.</p>
+<p>MERMAID. <b>Mermaid documentation</b>. [S. l.], [s. d.]. Disponível em: https://mermaid.js.org/. Acesso em: 21 nov. 2026.</p>
+<p>PALLETS PROJECTS. <b>Flask documentation</b>. [S. l.], [s. d.]. Disponível em: https://flask.palletsprojects.com/. Acesso em: 21 nov. 2026.</p>
+<p>PYTHON SOFTWARE FOUNDATION. <b>sqlite3</b>: DB-API 2.0 interface for SQLite databases. [S. l.], [s. d.]. Disponível em: https://docs.python.org/3/library/sqlite3.html. Acesso em: 21 nov. 2026.</p>
+<p>SOMMERVILLE, I. <b>Engenharia de software</b>. 10. ed. São Paulo: Pearson, 2018.</p>
+<p>SQLITE. <b>SQLite documentation</b>. [S. l.], [s. d.]. Disponível em: https://www.sqlite.org/docs.html. Acesso em: 21 nov. 2026.</p>
 </section>
 """
 
 
 def capa():
-    linhas = [html.escape(INSTITUICAO), html.escape(CURSO), html.escape(DISCIPLINA)]
-    topo = "<br>".join(l for l in linhas if l)
-    autores = "<br>".join(html.escape(a) for a in AUTORES)
-    if RA:
-        autores += f"<br>RA: {html.escape(RA)}"
+    autor = " e ".join(html.escape(a.upper()) for a in AUTORES)
     return f"""
 <div class="capa">
-  <div class="topo">{topo}</div>
-  <div class="titulo"><h1>{TITULO}</h1><p>Documentação do Projeto de Software<br>Requisitos, modelagem e implementação</p></div>
-  <div class="rodape">{autores}<br><br>{html.escape(DATA)}</div>
+  <div class="logo"><img src="assets/logo_unifil.jpeg" alt="UniFil - Centro Universitário Filadélfia"></div>
+  <p class="autor">{autor}</p>
+  <div class="miolo"><p class="titulo">{TITULO}:</p><p class="subtitulo">{html.escape(SUBTITULO)}</p></div>
+  <div class="base"><p>{html.escape(CIDADE)}<br>{html.escape(ANO)}</p></div>
+</div>"""
+
+
+def folha_rosto():
+    autor = " e ".join(html.escape(a.upper()) for a in AUTORES)
+    ra = f" (RA {html.escape(RA)})" if RA else ""
+    nota = (
+        f"Documentação do projeto de software desenvolvido na disciplina {html.escape(DISCIPLINA)}, "
+        f"do curso de {html.escape(CURSO)} do {html.escape(INSTITUICAO)}. "
+        f"Aluno: {' e '.join(html.escape(a) for a in AUTORES)}{ra}."
+    )
+    return f"""
+<div class="rosto">
+  <p class="autor">{autor}</p>
+  <div class="miolo"><p class="titulo">{TITULO}:</p><p class="subtitulo">{html.escape(SUBTITULO)}</p>
+  <p class="nota">{nota}</p></div>
+  <div class="base"><p>{html.escape(CIDADE)}<br>{html.escape(ANO)}</p></div>
 </div>"""
 
 
@@ -510,21 +493,40 @@ def sumario(paginas):
         ("n3", "4.5.1 UC01 - Cadastrar tarefa"), ("n3", "4.5.2 UC02 - Consultar tarefas"), ("n3", "4.5.3 UC03 - Editar tarefa"),
         ("n3", "4.5.4 UC04 - Excluir tarefa"), ("n3", "4.5.5 UC05 - Gerenciar categorias"),
         ("n2", "5. Implementação"), ("n3", "5.1 Mapeamento do CRUD"), ("n3", "5.2 Como executar"),
-        ("n2", "6. Conclusão"), ("n2", "7. Referências"),
+        ("n2", "6. Conclusão"), ("n2", "REFERÊNCIAS"),
     ]
     lis = "".join(
         f'<li class="{c}"><span class="t">{html.escape(t)}</span><span class="p"></span><span>{paginas.get(t, "")}</span></li>'
         for c, t in itens
     )
-    return f'<section class="sem-quebra toc" style="page-break-before: always"><h2>Sumário</h2><ul style="margin-left:0">{lis}</ul></section>', [t for _, t in itens]
+    return f'<section class="toc"><h2>SUMÁRIO</h2><ul style="margin-left:0">{lis}</ul></section>', [t for _, t in itens]
+
+
+QUADROS = [
+    "Telas do sistema", "Requisitos funcionais", "Requisitos não funcionais", "Descrição dos casos de uso",
+    "Estrutura de arquivos do projeto", "Mapeamento das operações de CRUD",
+]
+
+
+def numerar_quadros(h):
+    it = iter(enumerate(QUADROS, 1))
+
+    def sub(m):
+        n, t = next(it)
+        return (f'<div class="quadro"><p class="cap">Quadro {n} – {t}</p>{m.group(0)}'
+                f'<p class="fonte">Fonte: Elaborado pelo autor ({ANO}).</p></div>')
+
+    out = re.sub(r"<table.*?</table>", sub, h, flags=re.S)
+    assert next(it, None) is None, "faltam tabelas para os quadros"
+    return out
 
 
 def montar(paginas):
     toc_html, titulos = sumario(paginas)
-    corpo_html = corpo().replace('<section id="s1" class="sem-quebra" style="page-break-before: always">', '<section id="s1">')
+    corpo_html = numerar_quadros(corpo()).replace('<section id="s1" class="sem-quebra" style="page-break-before: always">', '<section id="s1">')
     pagina = f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Documentação - {TITULO}</title>
 <style>{CSS}</style></head><body>
-{capa()}{toc_html}{corpo_html}
+{capa()}{folha_rosto()}{toc_html}{corpo_html}
 <script src="tools/node_modules/mermaid/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({{startOnLoad: true, theme: 'neutral', securityLevel: 'loose', themeVariables: {{fontSize: '15px'}}}});</script>
 </body></html>"""
@@ -545,10 +547,10 @@ def achar_paginas(titulos):
     norm = lambda s: re.sub(r"\s+", " ", s).strip()
     leitor = PdfReader(PDF_OUT)
     textos = [norm(p.extract_text() or "") for p in leitor.pages]
-    # começa na página 3: pula capa (1) e sumário (2)
+    # começa na página 4: pula capa (1), folha de rosto (2) e sumário (3)
     paginas = {}
     for t in titulos:
-        for i in range(2, len(textos)):
+        for i in range(3, len(textos)):
             if norm(t) in textos[i]:
                 paginas[t] = i + 1
                 break
