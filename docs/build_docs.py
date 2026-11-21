@@ -278,14 +278,14 @@ def requisitos():
         ("RF11", "O sistema deve exibir mensagens de sucesso ou de erro após cada operação."),
     ]
     rnf = [
-        ("RNF01", "Usabilidade", "A interface deve ser web, simples e utilizável sem treinamento."),
-        ("RNF02", "Tecnologia", "O sistema deve ser desenvolvido em Python 3 com o micro-framework Flask."),
-        ("RNF03", "Persistência", "Os dados devem ser armazenados em banco de dados relacional SQLite."),
-        ("RNF04", "Integridade", "O banco deve garantir integridade referencial (chave estrangeira) e unicidade do nome da categoria."),
-        ("RNF05", "Desempenho", "As operações devem responder em menos de 1 segundo para até alguns milhares de tarefas."),
+        ("RNF01", "Usabilidade", "A interface deve ser web e dispensar treinamento: cadastrar uma tarefa deve exigir no máximo 3 cliques a partir da tela inicial, sem contar o preenchimento dos campos."),
+        ("RNF02", "Restrição de implementação", "O sistema deve ser desenvolvido em Python 3 com o micro-framework Flask."),
+        ("RNF03", "Restrição de implementação", "Os dados devem ser armazenados em um banco de dados relacional SQLite."),
+        ("RNF04", "Integridade", "O banco deve garantir a integridade referencial entre tarefa e categoria por meio de chave estrangeira."),
+        ("RNF05", "Desempenho", "A listagem de tarefas deve responder em menos de 1 segundo com até 5.000 tarefas cadastradas."),
         ("RNF06", "Portabilidade", "O sistema deve executar em qualquer sistema operacional com Python 3 instalado."),
-        ("RNF07", "Manutenibilidade", "O código deve ser organizado e possuir testes automatizados para as operações de CRUD."),
-        ("RNF08", "Segurança", "Os comandos SQL devem usar parâmetros (consultas parametrizadas) para evitar injeção de SQL."),
+        ("RNF07", "Manutenibilidade", "O código deve possuir testes automatizados que cubram as operações de CRUD."),
+        ("RNF08", "Segurança", "O sistema deve ser protegido contra injeção de SQL, utilizando consultas parametrizadas em todos os acessos ao banco."),
     ]
     linhas_rf = "".join(f"<tr><td>{c}</td><td>{d}</td></tr>" for c, d in rf)
     linhas_rnf = "".join(f"<tr><td>{c}</td><td>{t}</td><td>{d}</td></tr>" for c, t, d in rnf)
@@ -342,7 +342,7 @@ trabalho é a modelagem e o CRUD. A aplicação é composta pelas seguintes tela
 
 <section id="s3">
 <h2>3. Levantamento de Requisitos</h2>
-<p>Os requisitos foram divididos em funcionais, que descrevem o que o sistema deve fazer, e não funcionais, que descrevem restrições e qualidades do sistema, conforme a distinção apresentada por Sommerville (2018).</p>
+<p>Os requisitos foram divididos em funcionais, que descrevem o que o sistema deve fazer, e não funcionais, que descrevem restrições e qualidades do sistema, conforme a distinção apresentada por Sommerville (2018). Entre os requisitos não funcionais, dois são restrições de implementação, que fixam a tecnologia utilizada, e os demais são qualidades do produto, como usabilidade, desempenho e segurança.</p>
 {requisitos()}
 </section>
 

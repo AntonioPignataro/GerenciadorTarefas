@@ -82,9 +82,11 @@ Agora os requisitos. Os requisitos funcionais descrevem o que o sistema faz.
 Por exemplo: o RF01 é cadastrar uma tarefa, com o título obrigatório; o RF03 é filtrar a lista por categoria e por situação;
 e o RF10 é excluir uma categoria sem apagar as tarefas dela. Ao todo, são onze requisitos funcionais.
 
-Já os requisitos não funcionais descrevem como o sistema deve ser, ou seja, as qualidades e restrições.
-Por exemplo: o RNF02 diz que o sistema usa Python com Flask; o RNF03, que os dados ficam em um banco SQLite;
-e o RNF08, que os comandos SQL usam consultas parametrizadas, para evitar injeção de SQL.
+Já os requisitos não funcionais não são novas funcionalidades: eles descrevem como o sistema deve ser, ou seja, as qualidades e as restrições.
+Por exemplo: o RNF05, de desempenho, diz que a listagem de tarefas deve responder em menos de um segundo com até cinco mil tarefas;
+o RNF01, de usabilidade, diz que cadastrar uma tarefa deve exigir no máximo três cliques a partir da tela inicial;
+e o RNF08, de segurança, diz que o sistema deve ser protegido contra injeção de SQL, com consultas parametrizadas.
+Dois deles, o RNF02 e o RNF03, são restrições de implementação: eles fixam o uso de Python com Flask e do banco SQLite.
 São oito requisitos não funcionais.
 
 ### 4.1 Casos de uso (≈ 3:10)
