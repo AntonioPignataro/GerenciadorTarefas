@@ -19,12 +19,12 @@ Cada vídeo fica em torno de 7 a 8 minutos, dentro do limite de 10.
    - o PDF `docs/Documentacao.pdf` (para o Vídeo 1);
    - o repositório no navegador: https://github.com/AntonioPignataro/GerenciadorTarefas (Vídeo 2);
    - o terminal e o editor de código, com `schema.sql` e `app.py` abertos (Vídeo 2).
-2. **Para o Vídeo 2, prepare o terminal** (banco limpo e ambiente ligado):
+2. **Para o Vídeo 2, prepare o terminal** (abra um terminal novo e deixe o banco limpo). Rode só estes dois comandos antes de gravar:
    ```bash
    cd ~/GerenciadorTarefas
-   source .venv/bin/activate
    rm -f tarefas.db
    ```
+   (O `source .venv/bin/activate` e o resto você roda **durante** o vídeo, como está no roteiro.)
 3. **Gravação de tela no Mac:** `Cmd + Shift + 5` > "Gravar tela inteira" > **Opções** > Microfone: "Microfone integrado".
 4. Silencie notificações (Não Perturbe) e grave em lugar silencioso.
 5. Se errar, **não pare**: respire, repita a frase e siga. Pequenos tropeços são normais.
@@ -185,6 +185,22 @@ Obrigado por assistir!
 
 # VÍDEO 2 - Defesa da implementação (Parte II)
 
+**Resumo dos comandos do vídeo, na ordem** (cada um é digitado no momento indicado no roteiro):
+
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+Depois de usar o sistema no navegador: `Ctrl + C` no terminal para parar o servidor e então:
+
+```bash
+python -m unittest discover tests
+```
+
+Antes de gravar, já rodados fora do vídeo: `cd ~/GerenciadorTarefas` e `rm -f tarefas.db`.
+
 ### Abertura (0:00)
 
 **[TELA: página do repositório no GitHub]**
@@ -198,13 +214,34 @@ O último commit é o que estou entregando.
 
 ### Executando o sistema (≈ 0:40)
 
-**[TELA: terminal, na pasta do projeto, ambiente virtual ligado]**
+**[TELA: terminal, já dentro da pasta do projeto]**
 
-Vou executar o sistema. Primeiro instalo as dependências com `pip install -r requirements.txt`, que instala apenas o Flask.
+Vou executar o sistema. Estou no terminal, dentro da pasta do projeto.
+Primeiro ativo o ambiente virtual, que é um ambiente isolado do Python onde ficam as bibliotecas do projeto.
 
-**[TELA: digite `pip install -r requirements.txt` e Enter; depois `python app.py` e Enter]**
+**[TELA: digite este comando e dê Enter. A linha do terminal passa a começar com `(.venv)`]**
 
-Agora executo `python app.py`. O banco de dados, que é o arquivo `tarefas.db`, é criado automaticamente na primeira execução,
+```bash
+source .venv/bin/activate
+```
+
+Agora instalo as dependências do projeto, que é só o Flask.
+
+**[TELA: digite e dê Enter]**
+
+```bash
+pip install -r requirements.txt
+```
+
+E agora executo o sistema.
+
+**[TELA: digite e dê Enter. Aparece "Running on http://127.0.0.1:5001". Deixe esse terminal aberto]**
+
+```bash
+python app.py
+```
+
+O banco de dados, que é o arquivo `tarefas.db`, é criado automaticamente na primeira execução,
 a partir do arquivo `schema.sql`. O sistema agora está no ar, no endereço 127.0.0.1, porta 5001.
 
 ### O banco de dados (≈ 1:10)
@@ -314,9 +351,13 @@ As rotas de editar e de concluir usam UPDATE. Cada uma dessas rotas corresponde 
 
 ### Testes (≈ 6:20)
 
-**[TELA: terminal; pare o servidor com Ctrl + C; digite `python -m unittest discover tests` e Enter]**
+**[TELA: terminal; pare o servidor com `Ctrl + C`; depois digite este comando e dê Enter]**
 
-Para terminar, os testes automatizados. Eu paro o servidor e executo `python -m unittest discover tests`.
+```bash
+python -m unittest discover tests
+```
+
+Para terminar, os testes automatizados. Eu paro o servidor com Ctrl + C e executo o comando `python -m unittest discover tests`.
 São quatro testes, e todos passaram. Eles verificam o CRUD de categorias, o CRUD de tarefas com filtro e conclusão,
 a obrigatoriedade do título e que excluir uma categoria não apaga as tarefas.
 Eles usam um banco de dados temporário, então não mexem nos dados reais.
