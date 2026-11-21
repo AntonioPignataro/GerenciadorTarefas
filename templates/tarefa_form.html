@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Nova tarefa' if novo else 'Editar tarefa' }}{% endblock %}
+{% block conteudo %}
+<h2>{{ 'Nova tarefa' if novo else 'Editar tarefa' }}</h2>
+<form method="post" class="formulario">
+  <label>Título *
+    <input type="text" name="titulo" value="{{ tarefa.get('titulo') or '' }}" required>
+  </label>
+  <label>Descrição
+    <textarea name="descricao" rows="3">{{ tarefa.get('descricao') or '' }}</textarea>
+  </label>
+  <label>Prazo
+    <input type="date" name="prazo" value="{{ tarefa.get('prazo') or '' }}">
+  </label>
+  <label>Categoria
+    <select name="categoria_id">
+      <option value="">Sem categoria</option>
+      {% for c in categorias %}
+        <option value="{{ c.id }}" {{ 'selected' if tarefa.get('categoria_id')|string == c.id|string }}>{{ c.nome }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <div>
+    <button type="submit">Salvar</button>
+    <a href="{{ url_for('listar_tarefas') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

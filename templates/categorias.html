@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block titulo %}Categorias{% endblock %}
+{% block conteudo %}
+<h2>Categorias</h2>
+<form method="post" class="barra">
+  <input type="text" name="nome" placeholder="Nome da nova categoria" required>
+  <button type="submit">Adicionar</button>
+</form>
+
+{% if categorias %}
+<table>
+  <thead><tr><th>Nome</th><th>Tarefas</th><th>Ações</th></tr></thead>
+  <tbody>
+  {% for c in categorias %}
+    <tr>
+      <td>
+        <form method="post" action="{{ url_for('editar_categoria', categoria_id=c.id) }}" class="inline">
+          <input type="text" name="nome" value="{{ c.nome }}" required>
+          <button type="submit">Renomear</button>
+        </form>
+      </td>
+      <td>{{ c.total }}</td>
+      <td class="acoes">
+        <form method="post" action="{{ url_for('excluir_categoria', categoria_id=c.id) }}"
+              onsubmit="return confirm('Excluir esta categoria? As tarefas dela ficarão sem categoria.');">
+          <button class="perigo">Excluir</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  <p class="vazio">Nenhuma categoria cadastrada.</p>
+{% endif %}
+{% endblock %}

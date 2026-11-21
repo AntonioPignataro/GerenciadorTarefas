@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="barra">
+  <form method="get" class="filtros">
+    <select name="categoria">
+      <option value="">Todas as categorias</option>
+      {% for c in categorias %}
+        <option value="{{ c.id }}" {{ 'selected' if filtro_categoria == c.id|string }}>{{ c.nome }}</option>
+      {% endfor %}
+    </select>
+    <select name="status">
+      <option value="">Todas</option>
+      <option value="pendentes" {{ 'selected' if filtro_status == 'pendentes' }}>Pendentes</option>
+      <option value="concluidas" {{ 'selected' if filtro_status == 'concluidas' }}>Concluídas</option>
+    </select>
+    <button type="submit">Filtrar</button>
+  </form>
+  <a class="botao" href="{{ url_for('criar_tarefa') }}">+ Nova tarefa</a>
+</div>
+
+{% if tarefas %}
+<table>
+  <thead>
+    <tr><th></th><th>Título</th><th>Categoria</th><th>Prazo</th><th>Ações</th></tr>
+  </thead>
+  <tbody>
+  {% for t in tarefas %}
+    <tr class="{{ 'feita' if t.concluida }}">
+      <td>
+        <form method="post" action="{{ url_for('alternar_conclusao', tarefa_id=t.id) }}">
+          <button class="check" title="Concluir / reabrir">{{ '☑' if t.concluida else '☐' }}</button>
+        </form>
+      </td>
+      <td>
+        <strong>{{ t.titulo }}</strong>
+        {% if t.descricao %}<br><small>{{ t.descricao }}</small>{% endif %}
+      </td>
+      <td>{{ t.categoria_nome or '—' }}</td>
+      <td>{{ t.prazo or '—' }}</td>
+      <td class="acoes">
+        <a href="{{ url_for('editar_tarefa', tarefa_id=t.id) }}">Editar</a>
+        <form method="post" action="{{ url_for('excluir_tarefa', tarefa_id=t.id) }}"
+              onsubmit="return confirm('Excluir esta tarefa?');">
+          <button class="perigo">Excluir</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  <p class="vazio">Nenhuma tarefa encontrada.</p>
+{% endif %}
+{% endblock %}

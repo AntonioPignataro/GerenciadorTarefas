@@ -1,0 +1,351 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Documentação - Gerenciador de Tarefas</title>
+<style>
+@page { size: A4; margin: 22mm 20mm 22mm 20mm;
+        @bottom-center { content: counter(page); font-size: 10pt; color: #555; } }
+@page :first { @bottom-center { content: none; } }
+body { font-family: Georgia, 'Times New Roman', serif; font-size: 12pt; line-height: 1.5; color: #111; }
+h1, h2, h3 { font-family: Helvetica, Arial, sans-serif; color: #1f3a63; }
+h2, h3 { break-after: avoid; page-break-after: avoid; }
+h2 { font-size: 17pt; margin-top: 0; border-bottom: 2px solid #1f3a63; padding-bottom: 4px; }
+h3 { font-size: 13pt; margin-bottom: 4px; }
+p { text-align: justify; margin: 6px 0; }
+.capa { height: 250mm; display: flex; flex-direction: column; justify-content: space-between; text-align: center; page-break-after: always; }
+.capa .topo { font-family: Helvetica, Arial, sans-serif; font-size: 13pt; line-height: 1.7; }
+.capa .titulo { font-family: Helvetica, Arial, sans-serif; }
+.capa .titulo h1 { font-size: 34pt; margin: 0 0 12px; }
+.capa .titulo p { text-align: center; font-size: 14pt; color: #444; }
+.capa .rodape { font-family: Helvetica, Arial, sans-serif; font-size: 12pt; }
+section { page-break-before: always; }
+section.sem-quebra { page-break-before: avoid; }
+.toc a { color: #111; text-decoration: none; }
+.toc li { display: flex; margin: 4px 0; list-style: none; }
+.toc li .t { white-space: nowrap; }
+.toc li .p { flex: 1; border-bottom: 1px dotted #888; margin: 0 6px 5px; }
+.toc li.n3 { padding-left: 24px; font-size: 11pt; }
+ul, ol { margin: 6px 0 6px 18px; }
+table { border-collapse: collapse; width: 100%; font-size: 11pt; margin: 8px 0; break-inside: avoid; }
+th, td { border: 1px solid #999; padding: 4px 8px; text-align: left; vertical-align: top; }
+th { background: #e8eef7; font-family: Helvetica, Arial, sans-serif; }
+figure { margin: 10px 0; text-align: center; break-inside: avoid; }
+figure svg { max-width: 100%; max-height: 190mm; }
+figcaption { font-size: 10pt; color: #444; font-style: italic; margin-top: 4px; }
+pre.mermaid { background: none; margin: 0; }
+pre.mermaid svg { max-height: 200mm; width: auto; }
+code { font-family: Menlo, Consolas, monospace; font-size: 10.5pt; }
+</style></head><body>
+
+<div class="capa">
+  <div class="topo">Projeto de Desenvolvimento de Software I e II</div>
+  <div class="titulo"><h1>Gerenciador de Tarefas</h1><p>Documentação do Projeto de Software<br>Requisitos, modelagem e implementação</p></div>
+  <div class="rodape">Antonio Pignataro<br><br>Novembro de 2026</div>
+</div><section class="sem-quebra toc" style="page-break-before: always"><h2>Sumário</h2><ul style="margin-left:0"><li class="n2"><span class="t">1. Introdução</span><span class="p"></span><span>3</span></li><li class="n3"><span class="t">1.1 Tecnologias utilizadas (stack)</span><span class="p"></span><span>3</span></li><li class="n3"><span class="t">1.2 Escolha do tema e das tecnologias</span><span class="p"></span><span>3</span></li><li class="n2"><span class="t">2. Visão Geral do Sistema</span><span class="p"></span><span>4</span></li><li class="n2"><span class="t">3. Levantamento de Requisitos</span><span class="p"></span><span>5</span></li><li class="n3"><span class="t">3.1 Requisitos Funcionais</span><span class="p"></span><span>5</span></li><li class="n3"><span class="t">3.2 Requisitos Não Funcionais</span><span class="p"></span><span>6</span></li><li class="n2"><span class="t">4. Modelagem</span><span class="p"></span><span>7</span></li><li class="n3"><span class="t">4.1 Diagrama de Casos de Uso</span><span class="p"></span><span>7</span></li><li class="n3"><span class="t">4.2 Diagrama Entidade-Relacionamento (DER)</span><span class="p"></span><span>8</span></li><li class="n3"><span class="t">4.3 Diagrama de Classes</span><span class="p"></span><span>8</span></li><li class="n3"><span class="t">4.4 Diagrama de Atividade</span><span class="p"></span><span>10</span></li><li class="n3"><span class="t">4.5 Diagramas de Sequência</span><span class="p"></span><span>11</span></li><li class="n3"><span class="t">4.5.1 UC01 - Cadastrar tarefa</span><span class="p"></span><span>11</span></li><li class="n3"><span class="t">4.5.2 UC02 - Consultar tarefas</span><span class="p"></span><span>12</span></li><li class="n3"><span class="t">4.5.3 UC03 - Editar tarefa</span><span class="p"></span><span>12</span></li><li class="n3"><span class="t">4.5.4 UC04 - Excluir tarefa</span><span class="p"></span><span>13</span></li><li class="n3"><span class="t">4.5.5 UC05 - Gerenciar categorias</span><span class="p"></span><span>14</span></li><li class="n2"><span class="t">5. Implementação</span><span class="p"></span><span>15</span></li><li class="n3"><span class="t">5.1 Mapeamento do CRUD</span><span class="p"></span><span>15</span></li><li class="n3"><span class="t">5.2 Como executar</span><span class="p"></span><span>15</span></li><li class="n2"><span class="t">6. Conclusão</span><span class="p"></span><span>16</span></li><li class="n2"><span class="t">7. Referências</span><span class="p"></span><span>17</span></li></ul></section>
+<section id="s1">
+<h2>1. Introdução</h2>
+<p>Este documento descreve o projeto <b>Gerenciador de Tarefas</b>, desenvolvido por Antonio Pignataro (trabalho individual) para a disciplina
+Projeto de Desenvolvimento de Software I e II. O objetivo é projetar e implementar um sistema de software completo, passando pelo levantamento de
+requisitos, pela modelagem com diagramas da UML e do modelo de dados e pela implementação com acesso a banco de dados.</p>
+<p>O <b>Gerenciador de Tarefas</b> é uma aplicação web para organização de afazeres pessoais. O usuário cadastra tarefas
+com título, descrição e prazo, agrupa-as em categorias (por exemplo, "Faculdade", "Casa" ou "Trabalho"), acompanha quais
+estão pendentes ou concluídas e pode editar ou excluir qualquer registro. O sistema contempla as quatro operações de CRUD
+(<i>Create, Read, Update, Delete</i>) sobre duas entidades: <b>Tarefa</b> e <b>Categoria</b>.</p>
+<h3>1.1 Tecnologias utilizadas (stack)</h3>
+<ul>
+<li><b>Linguagem:</b> Python 3;</li>
+<li><b>Framework web:</b> Flask, responsável pelas rotas e pela renderização das páginas com o motor de templates Jinja2;</li>
+<li><b>Banco de dados:</b> SQLite (relacional), acessado pelo módulo <code>sqlite3</code> da biblioteca padrão do Python;</li>
+<li><b>Front-end:</b> HTML5 e CSS3 simples, sem bibliotecas externas;</li>
+<li><b>Testes:</b> módulo <code>unittest</code> com o cliente de testes do Flask;</li>
+<li><b>Controle de versão:</b> Git e GitHub.</li>
+</ul>
+<h3>1.2 Escolha do tema e das tecnologias</h3>
+<p>O tema foi escolhido por ser de fácil entendimento e por permitir exercitar todos os conceitos pedidos com poucas
+entidades. As tecnologias foram escolhidas pela simplicidade: o SQLite dispensa a instalação de um servidor de banco de
+dados e o Flask permite construir a aplicação com poucos arquivos, o que facilita a execução e a avaliação do projeto.</p>
+</section>
+
+<section id="s2">
+<h2>2. Visão Geral do Sistema</h2>
+<p>O sistema possui um único perfil de usuário, que realiza todas as operações. Não há autenticação, já que o foco do
+trabalho é a modelagem e o CRUD. A aplicação é composta pelas seguintes telas:</p>
+<table>
+<tr><th>Tela</th><th>Rota</th><th>Função</th></tr>
+<tr><td>Lista de tarefas</td><td><code>/</code></td><td>Exibe as tarefas, permite filtrar, concluir, editar e excluir.</td></tr>
+<tr><td>Nova tarefa</td><td><code>/tarefas/nova</code></td><td>Formulário de cadastro de tarefa.</td></tr>
+<tr><td>Editar tarefa</td><td><code>/tarefas/&lt;id&gt;/editar</code></td><td>Formulário de alteração de tarefa.</td></tr>
+<tr><td>Categorias</td><td><code>/categorias</code></td><td>Cadastro, listagem, renomeação e exclusão de categorias.</td></tr>
+</table>
+<p>A arquitetura segue o padrão de uma aplicação web de três camadas: o navegador (apresentação), a aplicação Flask
+(regras de negócio e rotas) e o banco SQLite (persistência).</p>
+</section>
+
+<section id="s3">
+<h2>3. Levantamento de Requisitos</h2>
+<h3>3.1 Requisitos Funcionais</h3><table><tr><th style='width:16%'>Código</th><th>Descrição</th></tr><tr><td>RF01</td><td>O sistema deve permitir cadastrar uma tarefa informando título (obrigatório), descrição, prazo e categoria (opcionais).</td></tr><tr><td>RF02</td><td>O sistema deve listar as tarefas cadastradas, exibindo título, descrição, categoria, prazo e situação.</td></tr><tr><td>RF03</td><td>O sistema deve permitir filtrar a lista de tarefas por categoria e por situação (pendentes ou concluídas).</td></tr><tr><td>RF04</td><td>O sistema deve permitir editar os dados de uma tarefa existente.</td></tr><tr><td>RF05</td><td>O sistema deve permitir marcar uma tarefa como concluída e reabri-la.</td></tr><tr><td>RF06</td><td>O sistema deve permitir excluir uma tarefa, mediante confirmação do usuário.</td></tr><tr><td>RF07</td><td>O sistema deve permitir cadastrar categorias com nome único e obrigatório.</td></tr><tr><td>RF08</td><td>O sistema deve listar as categorias, informando quantas tarefas pertencem a cada uma.</td></tr><tr><td>RF09</td><td>O sistema deve permitir renomear uma categoria.</td></tr><tr><td>RF10</td><td>O sistema deve permitir excluir uma categoria; as tarefas dela devem permanecer, porém sem categoria.</td></tr><tr><td>RF11</td><td>O sistema deve exibir mensagens de sucesso ou de erro após cada operação.</td></tr></table><h3>3.2 Requisitos Não Funcionais</h3><table><tr><th style='width:16%'>Código</th><th style='width:22%'>Categoria</th><th>Descrição</th></tr><tr><td>RNF01</td><td>Usabilidade</td><td>A interface deve ser web, simples e utilizável sem treinamento.</td></tr><tr><td>RNF02</td><td>Tecnologia</td><td>O sistema deve ser desenvolvido em Python 3 com o micro-framework Flask.</td></tr><tr><td>RNF03</td><td>Persistência</td><td>Os dados devem ser armazenados em banco de dados relacional SQLite.</td></tr><tr><td>RNF04</td><td>Integridade</td><td>O banco deve garantir integridade referencial (chave estrangeira) e unicidade do nome da categoria.</td></tr><tr><td>RNF05</td><td>Desempenho</td><td>As operações devem responder em menos de 1 segundo para até alguns milhares de tarefas.</td></tr><tr><td>RNF06</td><td>Portabilidade</td><td>O sistema deve executar em qualquer sistema operacional com Python 3 instalado.</td></tr><tr><td>RNF07</td><td>Manutenibilidade</td><td>O código deve ser organizado e possuir testes automatizados para as operações de CRUD.</td></tr><tr><td>RNF08</td><td>Segurança</td><td>Os comandos SQL devem usar parâmetros (consultas parametrizadas) para evitar injeção de SQL.</td></tr></table>
+</section>
+
+<section id="s4">
+<h2>4. Modelagem</h2>
+<h3>4.1 Diagrama de Casos de Uso</h3>
+<p>O diagrama abaixo apresenta os cinco casos de uso do sistema e o ator <b>Usuário</b>, que interage com todos eles.</p>
+<figure><svg viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif" font-size="14"><rect x="230" y="10" width="515" height="500" rx="8" fill="#fafbfd" stroke="#444" stroke-width="1.5"/><text x="487" y="38" text-anchor="middle" font-weight="bold">Sistema Gerenciador de Tarefas</text><g stroke="#222" stroke-width="2" fill="none"><circle cx="80" cy="250" r="16"/><line x1="80" y1="266" x2="80" y2="320"/><line x1="45" y1="285" x2="115" y2="285"/><line x1="80" y1="320" x2="50" y2="365"/><line x1="80" y1="320" x2="110" y2="365"/></g><text x="80" y="392" text-anchor="middle" font-weight="bold">Usuário</text><line x1="112" y1="285" x2="347" y2="95" stroke="#222" stroke-width="1.5"/><line x1="112" y1="285" x2="347" y2="185" stroke="#222" stroke-width="1.5"/><line x1="112" y1="285" x2="347" y2="275" stroke="#222" stroke-width="1.5"/><line x1="112" y1="285" x2="347" y2="365" stroke="#222" stroke-width="1.5"/><line x1="112" y1="285" x2="347" y2="455" stroke="#222" stroke-width="1.5"/><ellipse cx="487" cy="95" rx="145" ry="36" fill="#e8f0fb" stroke="#2b4c7e" stroke-width="1.5"/><text x="487" y="93" text-anchor="middle">UC01 - Cadastrar tarefa</text><text x="487" y="111" text-anchor="middle" font-size="11" fill="#555">(inclui validar título)</text><ellipse cx="487" cy="185" rx="145" ry="36" fill="#e8f0fb" stroke="#2b4c7e" stroke-width="1.5"/><text x="487" y="183" text-anchor="middle">UC02 - Consultar tarefas</text><text x="487" y="201" text-anchor="middle" font-size="11" fill="#555">(filtros por categoria e situação)</text><ellipse cx="487" cy="275" rx="145" ry="36" fill="#e8f0fb" stroke="#2b4c7e" stroke-width="1.5"/><text x="487" y="273" text-anchor="middle">UC03 - Editar tarefa</text><text x="487" y="291" text-anchor="middle" font-size="11" fill="#555">(inclui concluir / reabrir)</text><ellipse cx="487" cy="365" rx="145" ry="36" fill="#e8f0fb" stroke="#2b4c7e" stroke-width="1.5"/><text x="487" y="363" text-anchor="middle">UC04 - Excluir tarefa</text><text x="487" y="381" text-anchor="middle" font-size="11" fill="#555">(com confirmação)</text><ellipse cx="487" cy="455" rx="145" ry="36" fill="#e8f0fb" stroke="#2b4c7e" stroke-width="1.5"/><text x="487" y="453" text-anchor="middle">UC05 - Gerenciar categorias</text><text x="487" y="471" text-anchor="middle" font-size="11" fill="#555">(cadastrar, renomear e excluir)</text></svg><figcaption>Figura 1 - Diagrama de casos de uso.</figcaption></figure>
+<table>
+<tr><th style="width:26%">Caso de uso</th><th>Descrição</th><th style="width:20%">Requisitos</th></tr>
+<tr><td>UC01 - Cadastrar tarefa</td><td>O usuário informa os dados da tarefa e o sistema a grava, validando que o título foi preenchido.</td><td>RF01, RF11</td></tr>
+<tr><td>UC02 - Consultar tarefas</td><td>O usuário visualiza a lista de tarefas, podendo filtrar por categoria e situação.</td><td>RF02, RF03</td></tr>
+<tr><td>UC03 - Editar tarefa</td><td>O usuário altera os dados de uma tarefa ou a marca como concluída / pendente.</td><td>RF04, RF05, RF11</td></tr>
+<tr><td>UC04 - Excluir tarefa</td><td>O usuário remove uma tarefa após confirmar a operação.</td><td>RF06, RF11</td></tr>
+<tr><td>UC05 - Gerenciar categorias</td><td>O usuário cadastra, lista, renomeia e exclui categorias.</td><td>RF07 a RF11</td></tr>
+</table>
+</section>
+
+<section id="s5">
+<h3>4.2 Diagrama Entidade-Relacionamento (DER)</h3>
+<p>O modelo de dados possui duas entidades. Uma categoria pode classificar várias tarefas (relacionamento 1:N) e cada
+tarefa pertence a no máximo uma categoria, pois a chave estrangeira é opcional. Ao excluir uma categoria, a chave
+estrangeira das tarefas é definida como nula (<code>ON DELETE SET NULL</code>).</p>
+<figure><pre class="mermaid">erDiagram
+    CATEGORIA ||--o{ TAREFA : &quot;classifica&quot;
+    CATEGORIA {
+        INTEGER id PK
+        TEXT nome &quot;UNIQUE, NOT NULL&quot;
+    }
+    TAREFA {
+        INTEGER id PK
+        TEXT titulo &quot;NOT NULL&quot;
+        TEXT descricao
+        TEXT prazo &quot;AAAA-MM-DD&quot;
+        INTEGER concluida &quot;0 ou 1&quot;
+        INTEGER categoria_id FK &quot;opcional&quot;
+    }</pre><figcaption>Figura 2 - Diagrama Entidade-Relacionamento.</figcaption></figure>
+<h3>4.3 Diagrama de Classes</h3>
+<p>O diagrama de classes está focado nas entidades do domínio. A classe <b>Tarefa</b> referencia a classe
+<b>Categoria</b>; uma categoria pode ter zero ou mais tarefas.</p>
+<figure><pre class="mermaid">classDiagram
+    class Categoria {
+        -int id
+        -String nome
+        +cadastrar()
+        +renomear(nome)
+        +excluir()
+        +listar() List~Categoria~
+    }
+    class Tarefa {
+        -int id
+        -String titulo
+        -String descricao
+        -Date prazo
+        -boolean concluida
+        +cadastrar()
+        +editar()
+        +alternarConclusao()
+        +excluir()
+        +listar(categoria, status) List~Tarefa~
+    }
+    Categoria &quot;0..1&quot; &lt;-- &quot;0..*&quot; Tarefa : pertence a</pre><figcaption>Figura 3 - Diagrama de classes das entidades.</figcaption></figure>
+</section>
+
+<section id="s6">
+<h3>4.4 Diagrama de Atividade</h3>
+<p>O diagrama de atividade descreve o fluxo do caso de uso UC01 (Cadastrar tarefa), incluindo o desvio que ocorre quando
+o título não é informado.</p>
+<figure><pre class="mermaid">flowchart TD
+    subgraph U[&quot;Usuário&quot;]
+        A((Início)) --&gt; B[Clica em &#x27;Nova tarefa&#x27;]
+        B --&gt; C[Preenche título, descrição, prazo e categoria]
+        C --&gt; D[Clica em &#x27;Salvar&#x27;]
+        L[Visualiza a tarefa na lista] --&gt; M((Fim))
+        K[Corrige o título]
+    end
+    subgraph S[&quot;Sistema&quot;]
+        E{Título preenchido?}
+        F[Exibe mensagem de erro]
+        G[Insere a tarefa no banco de dados]
+        H[Exibe mensagem de sucesso]
+        I[Redireciona para a lista de tarefas]
+    end
+    D --&gt; E
+    E -- Não --&gt; F --&gt; K --&gt; D
+    E -- Sim --&gt; G --&gt; H --&gt; I --&gt; L</pre><figcaption>Figura 4 - Diagrama de atividade do cadastro de tarefa.</figcaption></figure>
+</section>
+
+<section id="s7">
+<h3>4.5 Diagramas de Sequência</h3>
+<p>Cada caso de uso possui um diagrama de sequência que mostra a troca de mensagens entre o usuário, o navegador, a
+aplicação Flask e o banco de dados SQLite.</p>
+<h3>4.5.1 UC01 - Cadastrar tarefa</h3>
+<figure><pre class="mermaid">sequenceDiagram
+    actor U as Usuário
+    participant N as Navegador
+    participant A as Aplicação Flask
+    participant B as SQLite
+    U-&gt;&gt;N: Clica em &quot;Nova tarefa&quot;
+    N-&gt;&gt;A: GET /tarefas/nova
+    A-&gt;&gt;B: SELECT categorias
+    B--&gt;&gt;A: lista de categorias
+    A--&gt;&gt;N: formulário de tarefa
+    U-&gt;&gt;N: Preenche dados e clica em &quot;Salvar&quot;
+    N-&gt;&gt;A: POST /tarefas/nova
+    alt título vazio
+        A--&gt;&gt;N: formulário com mensagem de erro
+    else título válido
+        A-&gt;&gt;B: INSERT INTO tarefa
+        B--&gt;&gt;A: confirmação
+        A--&gt;&gt;N: redireciona para / (mensagem de sucesso)
+        N-&gt;&gt;A: GET /
+        A--&gt;&gt;N: lista de tarefas atualizada
+    end</pre><figcaption>Figura 5 - Sequência do UC01.</figcaption></figure>
+</section>
+<section id="s8">
+<h3>4.5.2 UC02 - Consultar tarefas</h3>
+<figure><pre class="mermaid">sequenceDiagram
+    actor U as Usuário
+    participant N as Navegador
+    participant A as Aplicação Flask
+    participant B as SQLite
+    U-&gt;&gt;N: Abre a página inicial (ou aplica filtros)
+    N-&gt;&gt;A: GET / ?categoria=&amp;status=
+    A-&gt;&gt;B: SELECT tarefa LEFT JOIN categoria (com filtros)
+    B--&gt;&gt;A: tarefas
+    A-&gt;&gt;B: SELECT categorias (para o filtro)
+    B--&gt;&gt;A: categorias
+    A--&gt;&gt;N: página HTML com a tabela de tarefas
+    N--&gt;&gt;U: exibe a lista</pre><figcaption>Figura 6 - Sequência do UC02.</figcaption></figure>
+<h3>4.5.3 UC03 - Editar tarefa</h3>
+<figure><pre class="mermaid">sequenceDiagram
+    actor U as Usuário
+    participant N as Navegador
+    participant A as Aplicação Flask
+    participant B as SQLite
+    U-&gt;&gt;N: Clica em &quot;Editar&quot;
+    N-&gt;&gt;A: GET /tarefas/{id}/editar
+    A-&gt;&gt;B: SELECT tarefa WHERE id
+    B--&gt;&gt;A: dados da tarefa
+    A--&gt;&gt;N: formulário preenchido
+    U-&gt;&gt;N: Altera os dados e clica em &quot;Salvar&quot;
+    N-&gt;&gt;A: POST /tarefas/{id}/editar
+    alt título vazio
+        A--&gt;&gt;N: formulário com mensagem de erro
+    else título válido
+        A-&gt;&gt;B: UPDATE tarefa
+        B--&gt;&gt;A: confirmação
+        A--&gt;&gt;N: redireciona para a lista
+    end
+    opt Concluir / reabrir
+        U-&gt;&gt;N: Clica na caixa de seleção da tarefa
+        N-&gt;&gt;A: POST /tarefas/{id}/concluir
+        A-&gt;&gt;B: UPDATE tarefa SET concluida = 1 - concluida
+        A--&gt;&gt;N: redireciona para a lista
+    end</pre><figcaption>Figura 7 - Sequência do UC03.</figcaption></figure>
+</section>
+<section id="s9">
+<h3>4.5.4 UC04 - Excluir tarefa</h3>
+<figure><pre class="mermaid">sequenceDiagram
+    actor U as Usuário
+    participant N as Navegador
+    participant A as Aplicação Flask
+    participant B as SQLite
+    U-&gt;&gt;N: Clica em &quot;Excluir&quot;
+    N--&gt;&gt;U: pede confirmação
+    alt usuário confirma
+        U-&gt;&gt;N: Confirma
+        N-&gt;&gt;A: POST /tarefas/{id}/excluir
+        A-&gt;&gt;B: DELETE FROM tarefa WHERE id
+        B--&gt;&gt;A: confirmação
+        A--&gt;&gt;N: redireciona para a lista (mensagem de sucesso)
+    else usuário cancela
+        U-&gt;&gt;N: Cancela
+        N--&gt;&gt;U: nada é alterado
+    end</pre><figcaption>Figura 8 - Sequência do UC04.</figcaption></figure>
+<h3>4.5.5 UC05 - Gerenciar categorias</h3>
+<figure><pre class="mermaid">sequenceDiagram
+    actor U as Usuário
+    participant N as Navegador
+    participant A as Aplicação Flask
+    participant B as SQLite
+    U-&gt;&gt;N: Abre &quot;Categorias&quot;
+    N-&gt;&gt;A: GET /categorias
+    A-&gt;&gt;B: SELECT categorias com contagem de tarefas
+    B--&gt;&gt;A: categorias
+    A--&gt;&gt;N: página de categorias
+    alt Cadastrar
+        U-&gt;&gt;N: Informa o nome e clica em &quot;Adicionar&quot;
+        N-&gt;&gt;A: POST /categorias
+        A-&gt;&gt;B: INSERT INTO categoria
+        alt nome já existe
+            B--&gt;&gt;A: erro de unicidade
+            A--&gt;&gt;N: mensagem &quot;já existe uma categoria&quot;
+        else nome inédito
+            B--&gt;&gt;A: confirmação
+            A--&gt;&gt;N: redireciona para /categorias
+        end
+    else Renomear
+        U-&gt;&gt;N: Altera o nome e clica em &quot;Renomear&quot;
+        N-&gt;&gt;A: POST /categorias/{id}/editar
+        A-&gt;&gt;B: UPDATE categoria
+        A--&gt;&gt;N: redireciona para /categorias
+    else Excluir
+        U-&gt;&gt;N: Clica em &quot;Excluir&quot; e confirma
+        N-&gt;&gt;A: POST /categorias/{id}/excluir
+        A-&gt;&gt;B: DELETE FROM categoria (tarefas ficam sem categoria)
+        A--&gt;&gt;N: redireciona para /categorias
+    end</pre><figcaption>Figura 9 - Sequência do UC05.</figcaption></figure>
+</section>
+
+<section id="s10">
+<h2>5. Implementação</h2>
+<p>A implementação está no repositório do projeto e segue a documentação acima. A estrutura de arquivos é:</p>
+<table>
+<tr><th>Arquivo</th><th>Função</th></tr>
+<tr><td><code>app.py</code></td><td>Aplicação Flask: rotas, regras e acesso ao banco.</td></tr>
+<tr><td><code>schema.sql</code></td><td>Script de criação das tabelas (<code>categoria</code> e <code>tarefa</code>).</td></tr>
+<tr><td><code>templates/</code></td><td>Páginas HTML (Jinja2): base, lista, formulário de tarefa e categorias.</td></tr>
+<tr><td><code>static/style.css</code></td><td>Estilos da interface.</td></tr>
+<tr><td><code>tests/test_app.py</code></td><td>Testes automatizados do CRUD.</td></tr>
+</table>
+<h3>5.1 Mapeamento do CRUD</h3>
+<table>
+<tr><th>Operação</th><th>Tarefa</th><th>Categoria</th></tr>
+<tr><td>Create</td><td><code>POST /tarefas/nova</code></td><td><code>POST /categorias</code></td></tr>
+<tr><td>Read</td><td><code>GET /</code></td><td><code>GET /categorias</code></td></tr>
+<tr><td>Update</td><td><code>POST /tarefas/&lt;id&gt;/editar</code> e <code>/concluir</code></td><td><code>POST /categorias/&lt;id&gt;/editar</code></td></tr>
+<tr><td>Delete</td><td><code>POST /tarefas/&lt;id&gt;/excluir</code></td><td><code>POST /categorias/&lt;id&gt;/excluir</code></td></tr>
+</table>
+<h3>5.2 Como executar</h3>
+<ol>
+<li>Instalar as dependências: <code>pip install -r requirements.txt</code>;</li>
+<li>Executar: <code>python app.py</code> (o banco <code>tarefas.db</code> é criado automaticamente);</li>
+<li>Acessar <code>http://127.0.0.1:5000</code> no navegador;</li>
+<li>Rodar os testes: <code>python -m unittest discover tests</code>.</li>
+</ol>
+</section>
+
+<section id="s11">
+<h2>6. Conclusão</h2>
+<p>Com este projeto foi possível percorrer, na prática, as etapas principais do desenvolvimento de um software: levantar
+requisitos funcionais e não funcionais, modelar o comportamento com casos de uso, atividade e sequência, modelar os dados
+com o DER e o diagrama de classes e, por fim, implementar o sistema de acordo com essa documentação.</p>
+<p>O principal aprendizado foi perceber como a modelagem antecipa decisões da implementação: o DER definiu diretamente as
+tabelas e a chave estrangeira, e os diagramas de sequência indicaram quais rotas e consultas SQL seriam necessárias.
+Também foi importante tratar casos de erro, como o título vazio e o nome de categoria repetido, e decidir o que acontece
+com as tarefas quando uma categoria é excluída. Por fim, os testes automatizados mostraram que é possível verificar o
+CRUD de forma rápida e repetível.</p>
+<p>Como melhorias futuras, o sistema poderia ganhar autenticação de usuários, prioridades para as tarefas, lembretes de
+prazo e uma API para integração com aplicativos móveis.</p>
+</section>
+
+<section id="s12">
+<h2>7. Referências</h2>
+<ul style="list-style: none; margin-left: 0">
+<li>SOMMERVILLE, I. <b>Engenharia de Software</b>. 10. ed. São Paulo: Pearson, 2018.</li>
+<li>FOWLER, M. <b>UML Essencial: um breve guia para a linguagem-padrão de modelagem de objetos</b>. 3. ed. Porto Alegre: Bookman, 2005.</li>
+<li>ELMASRI, R.; NAVATHE, S. B. <b>Sistemas de Banco de Dados</b>. 7. ed. São Paulo: Pearson, 2018.</li>
+<li>PALLETS PROJECTS. <b>Flask Documentation</b>. Disponível em: https://flask.palletsprojects.com/. Acesso em: 21 nov. 2026.</li>
+<li>SQLITE. <b>SQLite Documentation</b>. Disponível em: https://www.sqlite.org/docs.html. Acesso em: 21 nov. 2026.</li>
+<li>PYTHON SOFTWARE FOUNDATION. <b>sqlite3 - DB-API 2.0 interface for SQLite databases</b>. Disponível em: https://docs.python.org/3/library/sqlite3.html. Acesso em: 21 nov. 2026.</li>
+<li>MERMAID. <b>Mermaid Documentation</b> (ferramenta usada para desenhar os diagramas). Disponível em: https://mermaid.js.org/. Acesso em: 21 nov. 2026.</li>
+</ul>
+</section>
+
+<script src="tools/node_modules/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad: true, theme: 'neutral', securityLevel: 'loose', themeVariables: {fontSize: '15px'}});</script>
+</body></html>
