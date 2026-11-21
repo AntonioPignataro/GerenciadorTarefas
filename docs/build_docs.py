@@ -18,7 +18,7 @@ CURSO = "Engenharia de Software"
 RA = "253466044"                          # com dupla, use ex.: "Nome A (RA 1) e Nome B (RA 2)" em AUTORES e deixe RA vazio
 DISCIPLINA = "Projeto de Desenvolvimento de Software I e II"
 REPOSITORIO = ""                          # ex.: "https://github.com/usuario/GerenciadorTarefas"
-CIDADE = "Londrina"
+CIDADE = "São Paulo"
 ANO = "2026"
 SUBTITULO = "Documentação e implementação de um sistema web de gestão de tarefas"
 # -------------------------------------------------------------------------------
