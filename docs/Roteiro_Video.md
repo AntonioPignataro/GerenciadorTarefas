@@ -19,12 +19,8 @@ Cada vídeo fica em torno de 7 a 8 minutos, dentro do limite de 10.
    - o PDF `docs/Documentacao.pdf` (para o Vídeo 1);
    - o repositório no navegador: https://github.com/AntonioPignataro/GerenciadorTarefas (Vídeo 2);
    - o terminal e o editor de código, com `schema.sql` e `app.py` abertos (Vídeo 2).
-2. **Para o Vídeo 2, prepare o terminal** (abra um terminal novo e deixe o banco limpo). Rode só estes dois comandos antes de gravar:
-   ```bash
-   cd ~/GerenciadorTarefas
-   rm -f tarefas.db
-   ```
-   (O `source .venv/bin/activate` e o resto você roda **durante** o vídeo, como está no roteiro.)
+2. **Para o Vídeo 2, abra um terminal novo e não rode nada antes de gravar.** Todos os comandos, desde entrar na
+   pasta do projeto, são digitados **durante** o vídeo, como está no roteiro.
 3. **Gravação de tela no Mac:** `Cmd + Shift + 5` > "Gravar tela inteira" > **Opções** > Microfone: "Microfone integrado".
 4. Silencie notificações (Não Perturbe) e grave em lugar silencioso.
 5. Se errar, **não pare**: respire, repita a frase e siga. Pequenos tropeços são normais.
@@ -188,18 +184,28 @@ Obrigado por assistir!
 **Resumo dos comandos do vídeo, na ordem** (cada um é digitado no momento indicado no roteiro):
 
 ```bash
+cd ~/GerenciadorTarefas
+rm -f tarefas.db
 source .venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
 
-Depois de usar o sistema no navegador: `Ctrl + C` no terminal para parar o servidor e então:
+Logo depois de iniciar o servidor, em uma **nova aba** do terminal (`Cmd + T`), ainda na parte do banco de dados:
+
+```bash
+cd ~/GerenciadorTarefas
+sqlite3 tarefas.db ".tables"
+sqlite3 tarefas.db ".schema"
+sqlite3 -header -column tarefas.db "SELECT * FROM tarefa;"
+sqlite3 -header -column tarefas.db "SELECT * FROM categoria;"
+```
+
+Depois, volte ao navegador para a demonstração. No final, volte para a aba do servidor, dê `Ctrl + C` para pará-lo e então:
 
 ```bash
 python -m unittest discover tests
 ```
-
-Antes de gravar, já rodados fora do vídeo: `cd ~/GerenciadorTarefas` e `rm -f tarefas.db`.
 
 ### Abertura (0:00)
 
@@ -214,10 +220,25 @@ O último commit é o que estou entregando.
 
 ### Executando o sistema (≈ 0:40)
 
-**[TELA: terminal, já dentro da pasta do projeto]**
+**[TELA: terminal novo, aberto e vazio]**
 
-Vou executar o sistema. Estou no terminal, dentro da pasta do projeto.
-Primeiro ativo o ambiente virtual, que é um ambiente isolado do Python onde ficam as bibliotecas do projeto.
+Vou executar o sistema, a partir do terminal. Primeiro entro na pasta do projeto.
+
+**[TELA: digite e dê Enter]**
+
+```bash
+cd ~/GerenciadorTarefas
+```
+
+Para começar do zero, apago o banco de dados de testes anterior, se existir. Ele será criado de novo automaticamente.
+
+**[TELA: digite e dê Enter. Não aparece mensagem nenhuma, é normal]**
+
+```bash
+rm -f tarefas.db
+```
+
+Agora ativo o ambiente virtual, que é um ambiente isolado do Python onde ficam as bibliotecas do projeto.
 
 **[TELA: digite este comando e dê Enter. A linha do terminal passa a começar com `(.venv)`]**
 
@@ -254,7 +275,50 @@ E a tabela tarefa, com id, título obrigatório, descrição, prazo, um campo co
 e o categoria_id, que é a chave estrangeira apontando para a categoria, com ON DELETE SET NULL.
 Isso é exatamente o DER que apresentei na documentação.
 
-### Demonstração: categorias (≈ 1:50)
+**[TELA: terminal; abra uma NOVA aba com `Cmd + T`. O servidor continua rodando na aba anterior. Digite e dê Enter]**
+
+```bash
+cd ~/GerenciadorTarefas
+```
+
+Além do arquivo, posso conferir o banco de verdade pelo terminal. O banco é o arquivo `tarefas.db`, que foi criado agora há pouco,
+quando o sistema iniciou. Primeiro, listo as tabelas que existem nele.
+
+**[TELA: digite e dê Enter. Aparecem as tabelas `categoria` e `tarefa`]**
+
+```bash
+sqlite3 tarefas.db ".tables"
+```
+
+Estão aqui as duas tabelas do DER: categoria e tarefa.
+Agora peço o schema, que é a estrutura do banco.
+
+**[TELA: digite e dê Enter. Aparecem os dois `CREATE TABLE`, com a chave estrangeira e o `ON DELETE SET NULL`]**
+
+```bash
+sqlite3 tarefas.db ".schema"
+```
+
+Aqui aparecem os comandos que criaram as tabelas, os mesmos do arquivo schema.sql, incluindo a chave estrangeira com ON DELETE SET NULL.
+A tabela sqlite_sequence é uma tabela interna que o próprio SQLite cria por causa do AUTOINCREMENT.
+
+Agora vou consultar os dados de cada tabela.
+
+**[TELA: digite e dê Enter. Não aparece nada, porque o banco ainda está vazio]**
+
+```bash
+sqlite3 -header -column tarefas.db "SELECT * FROM tarefa;"
+```
+
+**[TELA: digite e dê Enter. Também não aparece nada]**
+
+```bash
+sqlite3 -header -column tarefas.db "SELECT * FROM categoria;"
+```
+
+Não aparece nada, porque o banco acabou de ser criado e ainda está vazio. Agora vou usar o sistema para cadastrar os dados.
+
+### Demonstração: categorias (≈ 2:40)
 
 **[TELA: navegador em http://127.0.0.1:5001 ; clique em "Categorias"]**
 
@@ -274,7 +338,7 @@ Vou renomear "Casa" para "Pessoal". Esse é o Update.
 Agora vou tentar cadastrar "Faculdade" outra vez. O sistema avisa que já existe uma categoria com esse nome,
 porque o nome é único no banco.
 
-### Demonstração: tarefas (≈ 2:50)
+### Demonstração: tarefas (≈ 3:40)
 
 **[TELA: clique em "Tarefas" e depois em "+ Nova tarefa"]**
 
@@ -323,7 +387,7 @@ Isso acontece por causa do ON DELETE SET NULL que vimos no esquema.
 Por fim, vou excluir essa tarefa. Mais uma vez o navegador pede confirmação, e eu confirmo.
 Esse é o Delete. Com isso, mostrei as quatro operações do CRUD.
 
-### O código (≈ 5:00)
+### O código (≈ 5:45)
 
 **[TELA: editor, arquivo app.py, no início]**
 
@@ -351,7 +415,7 @@ As rotas de editar e de concluir usam UPDATE. Cada uma dessas rotas corresponde 
 
 ### Testes (≈ 6:20)
 
-**[TELA: terminal; pare o servidor com `Ctrl + C`; depois digite este comando e dê Enter]**
+**[TELA: volte para a aba do terminal onde o servidor está rodando; pare-o com `Ctrl + C`; depois digite este comando e dê Enter]**
 
 ```bash
 python -m unittest discover tests

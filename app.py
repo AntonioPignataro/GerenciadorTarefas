@@ -110,7 +110,8 @@ def editar_tarefa(tarefa_id):
     if tarefa is None:
         flash("Tarefa não encontrada.", "erro")
         return redirect(url_for("listar_tarefas"))
-    categorias = db.execute("SELECT * FROM categoria ORDER BY nome").fetchall()
+    tarefa = dict(tarefa)  # o template usa tarefa.get(...), que sqlite3.Row não possui
+    categorias =db.execute("SELECT * FROM categoria ORDER BY nome").fetchall()
 
     if request.method == "POST":
         titulo, descricao, prazo, categoria_id = _dados_tarefa_do_form()

@@ -37,7 +37,11 @@ class CrudTest(unittest.TestCase):
         pagina = self.client.get("/").data
         self.assertIn("Lavar louça".encode(), pagina)
         self.assertIn(b"Casa", pagina)
-        # Update
+        # Update (a tela de edição deve abrir já preenchida)
+        tela = self.client.get("/tarefas/1/editar")
+        self.assertEqual(tela.status_code, 200)
+        self.assertIn("Lavar louça".encode(), tela.data)
+        self.assertIn(b"2026-12-01", tela.data)
         self.client.post("/tarefas/1/editar", data={"titulo": "Lavar roupa", "categoria_id": "1"})
         pagina = self.client.get("/").data
         self.assertIn(b"Lavar roupa", pagina)
