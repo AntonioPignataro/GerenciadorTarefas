@@ -1,56 +1,338 @@
-# Roteiro dos vídeos de defesa
+# Roteiro completo dos vídeos de defesa
 
-Cada vídeo tem no máximo 10 minutos. O roteiro prevê **dois vídeos** (Parte I e Parte II).
-Se o seu tutor aceitar um único vídeo para as duas partes, junte os dois, mas confira que não passa de 10 min
-(os tempos abaixo somam ~13 min, então corte a demonstração de código).
+Este arquivo tem **tudo o que você precisa falar e fazer**, na ordem, sem precisar consultar outro lugar.
+Cada vídeo fica em torno de 7 a 8 minutos, dentro do limite de 10.
 
-> **Regras da atividade:** o vídeo precisa ser gravado por você, com a sua voz. Não é permitido usar IA nem leitor de
-> texto na confecção do vídeo. Por isso, este roteiro é um **guia de tópicos**: leia, entenda e fale com as suas
-> próprias palavras. Ensaie uma vez antes de gravar. As frases entre aspas são só sugestões.
+- Texto normal = o que **falar** (em voz alta, com a sua voz, em ritmo calmo).
+- **[TELA: ...]** = o que mostrar ou fazer na tela naquele momento. Não fale essa parte.
+- Pode trocar palavras para soar natural. O importante é não ler como se fosse uma leitura robótica.
 
-**Como gravar (Mac):** `Cmd + Shift + 5` > "Gravar tela inteira" > Opções > Microfone: "Microfone integrado".
-Grave em um ambiente silencioso, feche notificações, abra com antecedência: o PDF, o app no navegador
-(`http://127.0.0.1:5000`) e o código no editor. **Depois de gravar, assista ao começo e ao fim para confirmar que há som.**
-
----
-
-## VÍDEO 1 - Defesa da documentação (Parte I) - alvo: 6 a 7 min
-
-Na tela: `docs/Documentacao.pdf` aberto.
-
-| Tempo | O que mostrar | O que falar (tópicos) |
-|---|---|---|
-| 0:00 - 0:30 | Capa | Apresente-se: nome, curso, disciplina. "Este é o projeto Gerenciador de Tarefas, feito de forma individual (ou em dupla com ...)". |
-| 0:30 - 1:30 | Introdução / Seção 1 | O que é o sistema: organizar afazeres com título, descrição, prazo e categorias. Stack: Python, Flask, SQLite, HTML/CSS. Por que essa escolha: simples, sem servidor de banco, fácil de executar. Mencione o CRUD sobre duas entidades: Tarefa e Categoria. |
-| 1:30 - 2:30 | Requisitos / Seção 3 | Explique a diferença: funcionais = o que o sistema faz (ex.: RF01 cadastrar tarefa, RF03 filtrar); não funcionais = como ele é (ex.: RNF03 usa SQLite, RNF08 consultas parametrizadas). Cite 2 ou 3 de cada, não precisa ler todos. |
-| 2:30 - 3:30 | Caso de uso / Seção 4.1 | Um ator, o Usuário, e 5 casos de uso: cadastrar, consultar, editar, excluir tarefa e gerenciar categorias. Diga que "concluir tarefa" faz parte de editar. |
-| 3:30 - 4:30 | DER e Classes / 4.2 e 4.3 | Duas entidades, relação 1:N: uma categoria tem várias tarefas, cada tarefa tem no máximo uma categoria (FK opcional). Explique `ON DELETE SET NULL`: ao excluir uma categoria, as tarefas continuam, só ficam sem categoria. Mostre que o diagrama de classes é o mesmo modelo visto como objetos. |
-| 4:30 - 5:30 | Diagrama de atividade / 4.4 | Percorra o fluxo do cadastro: clicar em Nova tarefa > preencher > salvar > o sistema valida o título > se vazio, mostra erro e volta; se válido, grava e volta para a lista. |
-| 5:30 - 6:30 | Sequência / 4.5 | Escolha UC01 e explique a ordem das mensagens: Usuário > Navegador > Flask > SQLite e o retorno. Mostre o `alt` (título vazio x válido). Diga que os outros quatro diagramas seguem a mesma ideia, e cite uma diferença (ex.: UC04 tem a confirmação antes de excluir). |
-| 6:30 - 7:00 | Conclusão / Seção 6 | O que você aprendeu: a modelagem ajuda a decidir a implementação (o DER virou as tabelas, as sequências viraram rotas); importância de tratar erros; testes automatizados. Agradeça e encerre. |
+> **Atenção à regra da atividade:** ela proíbe IA e leitores de texto (voz sintética) na confecção do vídeo.
+> Falar com a sua própria voz é o esperado. Como este roteiro foi redigido com apoio de IA, se tiver
+> dúvida, pergunte ao tutor antes de gravar se não há problema em usar um roteiro de apoio.
 
 ---
 
-## VÍDEO 2 - Defesa da implementação (Parte II) - alvo: 6 a 7 min
+## Antes de gravar (preparação, 5 minutos)
 
-Na tela: terminal, navegador com o app e editor com o código.
+1. **Abra estas janelas** e deixe prontas:
+   - o PDF `docs/Documentacao.pdf` (para o Vídeo 1);
+   - o repositório no navegador: https://github.com/AntonioPignataro/GerenciadorTarefas (Vídeo 2);
+   - o terminal e o editor de código, com `schema.sql` e `app.py` abertos (Vídeo 2).
+2. **Para o Vídeo 2, prepare o terminal** (banco limpo e ambiente ligado):
+   ```bash
+   cd ~/GerenciadorTarefas
+   source .venv/bin/activate
+   rm -f tarefas.db
+   ```
+3. **Gravação de tela no Mac:** `Cmd + Shift + 5` > "Gravar tela inteira" > **Opções** > Microfone: "Microfone integrado".
+4. Silencie notificações (Não Perturbe) e grave em lugar silencioso.
+5. Se errar, **não pare**: respire, repita a frase e siga. Pequenos tropeços são normais.
+6. **Depois de gravar:** assista ao começo e ao fim para confirmar que o **som** está bem. Cada vídeo deve ter menos de 10 minutos.
 
-| Tempo | O que mostrar | O que falar (tópicos) |
-|---|---|---|
-| 0:00 - 0:30 | Repositório no GitHub | Apresente-se. Mostre o repositório: README, pastas e o commit/tag da entrega. Diga que o tutor e o `fernandonakagawa-unifil` têm acesso. |
-| 0:30 - 1:15 | Terminal | Mostre como rodar: `pip install -r requirements.txt` e `python app.py`. Diga que o banco `tarefas.db` é criado automaticamente a partir do `schema.sql`. |
-| 1:15 - 2:00 | Código: `schema.sql` | Duas tabelas, `categoria` e `tarefa`, com a chave estrangeira e `ON DELETE SET NULL`. Relacione com o DER da documentação. |
-| 2:00 - 3:00 | Demo: categorias | Em Categorias: **cadastre** "Faculdade" e "Casa" (Create); mostre a lista com a contagem (Read); **renomeie** uma (Update). Tente cadastrar uma repetida para mostrar a mensagem de erro. |
-| 3:00 - 4:30 | Demo: tarefas | **Cadastre** uma tarefa com título, descrição, prazo e categoria. Tente salvar sem título e mostre a validação. **Edite** uma tarefa. Marque outra como **concluída**. Use os **filtros** (por categoria e por situação). **Exclua** uma tarefa (mostre a confirmação). |
-| 4:30 - 5:45 | Código: `app.py` | Mostre 2 ou 3 rotas: `criar_tarefa` (INSERT com `?` parametrizado, o que evita injeção de SQL), `listar_tarefas` (SELECT com LEFT JOIN e filtros) e `excluir_categoria`. Explique como cada uma vira uma operação do CRUD e um diagrama de sequência. |
-| 5:45 - 6:30 | Testes | Rode `python -m unittest discover tests` e mostre os 4 testes passando. Diga que eles cobrem o CRUD de tarefas e de categorias. |
-| 6:30 - 7:00 | Fechamento | Resuma: documentação e implementação coerentes, CRUD completo com SQLite. Cite o que aprendeu e uma melhoria futura (ex.: login de usuários). Encerre. |
+---
+---
+
+# VÍDEO 1 - Defesa da documentação (Parte I)
+
+### Abertura (0:00)
+
+**[TELA: capa do PDF]**
+
+Olá! Meu nome é Antonio Pignataro, meu RA é 253466044, e sou aluno do curso de Engenharia de Software da UniFil.
+Neste vídeo eu vou apresentar a documentação do meu projeto da disciplina de Projeto de Desenvolvimento de Software, Parte I.
+O trabalho foi feito de forma individual. O projeto se chama Gerenciador de Tarefas. A implementação dele eu apresento no segundo vídeo.
+
+**[TELA: página do sumário]**
+
+Aqui no sumário dá para ver a estrutura do documento: introdução, visão geral do sistema, levantamento de requisitos,
+a modelagem, com todos os diagramas, a implementação, a conclusão e as referências.
+
+### 1. Introdução (≈ 0:40)
+
+**[TELA: seção 1 - Introdução]**
+
+O Gerenciador de Tarefas é uma aplicação web para organizar os afazeres do dia a dia.
+O usuário cadastra tarefas com título, descrição e prazo, separa as tarefas em categorias, como "Faculdade" ou "Casa",
+marca o que já foi concluído e pode editar ou excluir qualquer registro.
+Isso cobre as quatro operações do CRUD: criar, ler, atualizar e excluir, aplicadas a duas entidades, que são a tarefa e a categoria.
+
+Sobre as tecnologias: usei Python como linguagem.
+Para a parte web usei o Flask, que é um framework do Python. Ele recebe os pedidos que o navegador faz,
+executa a função correspondente e devolve a página para o usuário.
+Para o banco de dados usei o SQLite, que é um banco de dados relacional completo, mas embutido na própria aplicação,
+então eu não preciso instalar um servidor de banco de dados separado.
+A interface foi feita com HTML e CSS.
+Escolhi essas tecnologias pela simplicidade, já que o foco do trabalho é a documentação e o CRUD.
+
+### 2. Visão geral (≈ 1:50)
+
+**[TELA: seção 2 - Visão Geral, quadro das telas]**
+
+Na visão geral eu apresento as quatro telas do sistema: a lista de tarefas, a tela de nova tarefa, a de editar tarefa e a de categorias.
+A arquitetura tem três camadas: o navegador, que mostra as telas; a aplicação Flask, que contém as rotas e as regras;
+e o banco SQLite, que guarda os dados.
+Eu não incluí login de usuário, porque o foco do trabalho é o CRUD e a modelagem.
+
+### 3. Requisitos (≈ 2:15)
+
+**[TELA: seção 3 - quadros de requisitos funcionais e não funcionais]**
+
+Agora os requisitos. Os requisitos funcionais descrevem o que o sistema faz.
+Por exemplo: o RF01 é cadastrar uma tarefa, com o título obrigatório; o RF03 é filtrar a lista por categoria e por situação;
+e o RF10 é excluir uma categoria sem apagar as tarefas dela. Ao todo, são onze requisitos funcionais.
+
+Já os requisitos não funcionais descrevem como o sistema deve ser, ou seja, as qualidades e restrições.
+Por exemplo: o RNF02 diz que o sistema usa Python com Flask; o RNF03, que os dados ficam em um banco SQLite;
+e o RNF08, que os comandos SQL usam consultas parametrizadas, para evitar injeção de SQL.
+São oito requisitos não funcionais.
+
+### 4.1 Casos de uso (≈ 3:10)
+
+**[TELA: seção 4.1 - Figura 1, diagrama de casos de uso]**
+
+Este é o diagrama de casos de uso. Ele mostra o que o usuário consegue fazer no sistema.
+Existe um único ator, o Usuário, e cinco casos de uso: cadastrar tarefa, consultar tarefas, editar tarefa,
+excluir tarefa e gerenciar categorias.
+Marcar uma tarefa como concluída faz parte da edição.
+
+**[TELA: Quadro 4 - descrição dos casos de uso]**
+
+Neste quadro, cada caso de uso tem uma descrição e a indicação dos requisitos que ele atende.
+
+### 4.2 DER (≈ 3:45)
+
+**[TELA: seção 4.2 - Figura 2, DER]**
+
+O DER, que é o diagrama entidade-relacionamento, representa o banco de dados.
+Eu tenho duas tabelas. A tabela categoria tem o identificador e o nome, que é único.
+A tabela tarefa tem o identificador, o título, a descrição, o prazo, um campo que indica se está concluída
+e o identificador da categoria.
+
+A relação é de um para muitos: uma categoria pode ter várias tarefas, e cada tarefa pertence a no máximo uma categoria,
+porque essa chave estrangeira é opcional.
+Quando uma categoria é excluída, as tarefas dela não são apagadas: o campo de categoria apenas fica vazio.
+Essa regra se chama ON DELETE SET NULL.
+
+### 4.3 Diagrama de classes (≈ 4:25)
+
+**[TELA: seção 4.3 - Figura 3, diagrama de classes]**
+
+O diagrama de classes mostra essas mesmas duas entidades do ponto de vista de objetos.
+Temos a classe Categoria e a classe Tarefa, com seus atributos e suas operações,
+e a ligação entre elas: uma categoria tem zero ou mais tarefas, e uma tarefa tem zero ou uma categoria.
+
+### 4.4 Diagrama de atividade (≈ 4:50)
+
+**[TELA: seção 4.4 - Figura 4, diagrama de atividade]**
+
+O diagrama de atividade mostra o fluxo de cadastrar uma tarefa. Ele está dividido em duas raias: a do usuário e a do sistema.
+O usuário clica em "Nova tarefa", preenche os dados e clica em "Salvar".
+O sistema, então, verifica se o título foi preenchido.
+Se não foi, mostra uma mensagem de erro e o usuário corrige o título.
+Se foi, o sistema grava no banco, mostra uma mensagem de sucesso e volta para a lista, onde o usuário vê a tarefa cadastrada.
+
+### 4.5 Diagramas de sequência (≈ 5:35)
+
+**[TELA: seção 4.5.1 - Figura 5, sequência do UC01]**
+
+Para cada caso de uso eu fiz um diagrama de sequência, que mostra a ordem das mensagens entre
+o usuário, o navegador, a aplicação Flask e o banco SQLite.
+Vou explicar o primeiro, o de cadastrar tarefa.
+O usuário clica em "Nova tarefa". O navegador pede a página ao Flask, o Flask consulta as categorias no banco para montar o formulário
+e devolve a página.
+O usuário preenche e clica em "Salvar", e o navegador envia os dados por POST.
+Aqui existe uma decisão: se o título estiver vazio, o Flask devolve o formulário com uma mensagem de erro.
+Se estiver válido, o Flask executa um INSERT no banco, recebe a confirmação e redireciona o usuário para a lista de tarefas.
+
+**[TELA: role rapidamente pelas figuras 6, 7, 8 e 9]**
+
+Os outros quatro diagramas seguem a mesma lógica.
+O de consultar tarefas tem apenas leituras no banco, com SELECT, e aceita filtros.
+O de editar tem um UPDATE, e também mostra a opção de concluir ou reabrir a tarefa.
+O de excluir tem uma confirmação do usuário antes do DELETE.
+E o de gerenciar categorias tem três caminhos: cadastrar, renomear e excluir, incluindo o tratamento de nome repetido.
+
+### 5. Implementação (≈ 6:35)
+
+**[TELA: seção 5 - quadros de arquivos e de CRUD]**
+
+Na parte de implementação, o documento lista os arquivos do projeto e mostra qual rota corresponde a cada operação do CRUD,
+tanto para tarefas quanto para categorias, e explica como executar o sistema.
+O sistema funcionando eu mostro no segundo vídeo.
+
+### 6. Conclusão e encerramento (≈ 6:55)
+
+**[TELA: seção 6 - Conclusão]**
+
+Como conclusão, o que eu mais aprendi foi que a modelagem ajuda a decidir a implementação.
+O DER virou diretamente as tabelas e a chave estrangeira, e os diagramas de sequência mostraram quais rotas e consultas SQL eu precisava criar.
+Também aprendi a pensar nos casos de erro, como o título vazio e o nome de categoria repetido,
+e a decidir o que acontece com as tarefas quando uma categoria é excluída.
+Por fim, percebi que testes automatizados ajudam a conferir o CRUD de forma rápida e repetível.
+Como melhorias futuras, o sistema poderia ganhar login de usuários, prioridade nas tarefas e lembretes de prazo.
+
+**[TELA: seção de referências]**
+
+As referências incluem livros de engenharia de software, de UML e de banco de dados,
+além da documentação oficial do Flask e do SQLite.
+Obrigado por assistir!
+
+---
+---
+
+# VÍDEO 2 - Defesa da implementação (Parte II)
+
+### Abertura (0:00)
+
+**[TELA: página do repositório no GitHub]**
+
+Olá! Eu sou o Antonio Pignataro, RA 253466044, do curso de Engenharia de Software da UniFil.
+Este é o segundo vídeo, com a defesa da implementação do Gerenciador de Tarefas, que segue a documentação apresentada no primeiro vídeo.
+
+Aqui está o repositório no GitHub. Ele é público, então o tutor e o usuário fernandonakagawa-unifil têm acesso.
+No repositório estão o código da aplicação, o README com as instruções, a documentação em PDF dentro da pasta docs e a pasta de testes.
+O último commit é o que estou entregando.
+
+### Executando o sistema (≈ 0:40)
+
+**[TELA: terminal, na pasta do projeto, ambiente virtual ligado]**
+
+Vou executar o sistema. Primeiro instalo as dependências com `pip install -r requirements.txt`, que instala apenas o Flask.
+
+**[TELA: digite `pip install -r requirements.txt` e Enter; depois `python app.py` e Enter]**
+
+Agora executo `python app.py`. O banco de dados, que é o arquivo `tarefas.db`, é criado automaticamente na primeira execução,
+a partir do arquivo `schema.sql`. O sistema agora está no ar, no endereço 127.0.0.1, porta 5001.
+
+### O banco de dados (≈ 1:10)
+
+**[TELA: editor, arquivo schema.sql]**
+
+Antes de usar, mostro o esquema do banco. Este é o `schema.sql`.
+Temos a tabela categoria, com um id e um nome único e obrigatório.
+E a tabela tarefa, com id, título obrigatório, descrição, prazo, um campo concluída, que vale zero ou um,
+e o categoria_id, que é a chave estrangeira apontando para a categoria, com ON DELETE SET NULL.
+Isso é exatamente o DER que apresentei na documentação.
+
+### Demonstração: categorias (≈ 1:50)
+
+**[TELA: navegador em http://127.0.0.1:5001 ; clique em "Categorias"]**
+
+Agora vou usar o sistema. Começo pelas categorias.
+
+**[TELA: digite `Faculdade` no campo e clique em "Adicionar"; depois `Casa` e "Adicionar"]**
+
+Vou cadastrar a categoria "Faculdade" e depois a categoria "Casa". Isso é o Create do CRUD.
+A lista mostra o nome de cada categoria e quantas tarefas ela tem. Por enquanto, zero. Isso é o Read.
+
+**[TELA: na linha "Casa", troque o nome para `Pessoal` e clique em "Renomear"]**
+
+Vou renomear "Casa" para "Pessoal". Esse é o Update.
+
+**[TELA: digite `Faculdade` de novo e clique em "Adicionar"]**
+
+Agora vou tentar cadastrar "Faculdade" outra vez. O sistema avisa que já existe uma categoria com esse nome,
+porque o nome é único no banco.
+
+### Demonstração: tarefas (≈ 2:50)
+
+**[TELA: clique em "Tarefas" e depois em "+ Nova tarefa"]**
+
+Vamos às tarefas. Clico em "Nova tarefa".
+
+**[TELA: Título `Entregar projeto de software`; Descrição `Enviar PDF e vídeo na plataforma`; Prazo 21/11/2026; Categoria `Faculdade`; clique em "Salvar"]**
+
+Preencho o título, a descrição, o prazo e escolho a categoria "Faculdade". Clico em "Salvar".
+O sistema mostra a mensagem de sucesso, e a tarefa aparece na lista.
+
+**[TELA: "+ Nova tarefa" > Título `Lavar o carro`; Categoria `Pessoal`; sem prazo; "Salvar"]**
+
+Cadastro mais uma: "Lavar o carro", na categoria "Pessoal", sem prazo.
+
+**[TELA: "+ Nova tarefa" > no título digite apenas três espaços; clique em "Salvar"]**
+
+Agora a validação. Se eu tentar salvar sem título, o próprio navegador já avisa.
+Mas o servidor também valida: se eu digitar só espaços, o sistema recusa e mostra a mensagem "O título é obrigatório".
+
+**[TELA: clique em "Cancelar"; na tarefa do carro, clique em "Editar"]**
+
+Vou editar a tarefa do carro.
+
+**[TELA: mude o título para `Lavar o carro e aspirar`; clique em "Salvar"]**
+
+Mudo o título para "Lavar o carro e aspirar" e salvo. Esse é o Update das tarefas.
+
+**[TELA: clique na caixa de seleção (☐) dessa tarefa]**
+
+Agora clico na caixa de seleção para marcar a tarefa como concluída.
+Ela fica riscada e vai para o final da lista.
+
+**[TELA: use os filtros: categoria `Faculdade` > "Filtrar"; depois "Todas as categorias" + situação `Concluídas` > "Filtrar"; depois `Pendentes` > "Filtrar"]**
+
+Aqui estão os filtros. Posso filtrar por categoria, por exemplo só "Faculdade",
+e por situação: só as concluídas, ou só as pendentes.
+
+**[TELA: vá em "Categorias", clique em "Excluir" na categoria "Pessoal" e confirme; depois volte em "Tarefas"]**
+
+Agora vou excluir a categoria "Pessoal". O navegador pede confirmação, e eu confirmo.
+Voltando às tarefas, a tarefa do carro continua lá, só que sem categoria, aparecendo com um traço.
+Isso acontece por causa do ON DELETE SET NULL que vimos no esquema.
+
+**[TELA: na tarefa do carro, clique em "Excluir" e confirme]**
+
+Por fim, vou excluir essa tarefa. Mais uma vez o navegador pede confirmação, e eu confirmo.
+Esse é o Delete. Com isso, mostrei as quatro operações do CRUD.
+
+### O código (≈ 5:00)
+
+**[TELA: editor, arquivo app.py, no início]**
+
+Vamos ver o código. Este é o `app.py`. Ele começa criando a aplicação Flask.
+A função `get_db` abre a conexão com o SQLite e liga o controle de chaves estrangeiras.
+
+**[TELA: rola até a função criar_tarefa]**
+
+Aqui está a rota de cadastrar tarefa. Se a requisição for um GET, ela mostra o formulário.
+Se for um POST, ela lê os campos, verifica se o título foi preenchido
+e executa um INSERT INTO tarefa. Repare que os valores entram por pontos de interrogação.
+São parâmetros, e isso evita injeção de SQL. Depois ela salva com commit e redireciona para a lista.
+
+**[TELA: rola até listar_tarefas]**
+
+Esta é a rota que lista as tarefas. Ela monta um SELECT com LEFT JOIN na tabela categoria,
+para trazer o nome da categoria junto, e acrescenta os filtros de categoria e de situação
+conforme os parâmetros da URL. As pendentes aparecem primeiro, ordenadas por prazo.
+
+**[TELA: rola até excluir_categoria]**
+
+E esta é a rota de excluir categoria, que executa um DELETE.
+Como o banco tem ON DELETE SET NULL, as tarefas dessa categoria continuam existindo, apenas sem categoria.
+As rotas de editar e de concluir usam UPDATE. Cada uma dessas rotas corresponde a um dos diagramas de sequência da documentação.
+
+### Testes (≈ 6:20)
+
+**[TELA: terminal; pare o servidor com Ctrl + C; digite `python -m unittest discover tests` e Enter]**
+
+Para terminar, os testes automatizados. Eu paro o servidor e executo `python -m unittest discover tests`.
+São quatro testes, e todos passaram. Eles verificam o CRUD de categorias, o CRUD de tarefas com filtro e conclusão,
+a obrigatoriedade do título e que excluir uma categoria não apaga as tarefas.
+Eles usam um banco de dados temporário, então não mexem nos dados reais.
+
+### Encerramento (≈ 6:50)
+
+**[TELA: repositório no GitHub ou terminal]**
+
+Resumindo: o sistema tem CRUD completo de tarefas e categorias, usa um banco de dados relacional SQLite
+e está de acordo com a documentação que apresentei no primeiro vídeo.
+Com este projeto eu aprendi como a modelagem se transforma em código, e a importância de validar dados e de testar.
+Como melhoria futura, eu adicionaria login de usuários. Obrigado por assistir!
 
 ---
 
-## Checklist antes de enviar
+## Checklist final
 
-- [ ] O vídeo abre e **tem som** (assista do começo ao fim, ao menos o início e o fim).
-- [ ] Menos de 10 minutos cada.
-- [ ] Se o arquivo for grande: suba no YouTube como **Não listado** e envie o link.
-- [ ] Você não usou voz sintética nem leitor de texto.
+- [ ] O vídeo abre e **tem som** (assista ao começo e ao fim).
+- [ ] Cada vídeo tem **menos de 10 minutos**.
+- [ ] Se o arquivo for grande, suba no YouTube como **Não listado** e envie o link.
+- [ ] A voz é a sua, sem voz sintética nem leitor de texto.

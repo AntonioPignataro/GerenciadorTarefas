@@ -200,4 +200,5 @@ def excluir_categoria(categoria_id):
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    # Porta 5001: no macOS a 5000 costuma estar ocupada pelo AirPlay Receiver.
+    app.run(debug=True, port=5001)
